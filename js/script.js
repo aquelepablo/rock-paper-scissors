@@ -7,7 +7,10 @@ Choose['Paper'] > 1
 const Choose = {
     Rock: 0,
     Paper: 1,
-    Scissors: 2
+    Scissors: 2,
+    [0]: 'Rock',
+    [1]: 'Paper',
+    [2]: 'Scissors'
 };
 
 const maxOptions = Object.keys(Choose).length - 1;
@@ -90,4 +93,53 @@ function getUserChoice(){
     } catch (error) {
         throw error;
     }
+}
+
+function getWinner(userChoice, computerChoice){
+    
+    let objResult = {
+        userWin: false,
+        result: ''
+    }
+
+    //0 BEATS 1
+    if((userChoice == Choose.Paper && computerChoice == Choose.Rock) ||
+        (userChoice == Choose.Rock && computerChoice == Choose.Scissors) ||
+        (userChoice == Choose.Scissors && computerChoice == Choose.Paper)
+    ){
+        objResult.userWin = true;
+        objResult.result = `You Win! ${Choose[userChoice]} beats ${Choose[computerChoice]}`
+
+    }else{
+        objResult.userWin = false;
+        objResult.result = `You Lose! ${Choose[computerChoice]} beats ${Choose[userChoice]}`
+    }
+
+    return objResult;
+    
+    /*
+    Choose.Paper BEATS Choose.Rock
+    Choose.Rock BEATS Choose.Scissors
+    Choose.Scissors BEATS Choose.Paper
+
+    0 BEATS 1
+    1 BEATS 2
+    2 BEATS 0
+
+
+    "You Lose! 
+    "You Win! 
+    "Paper beats Rock"
+    "Rock beats Scissors"
+    "Scissors beats Paper"
+    */
+}
+
+//Plays a single match of Rock, Paper, Scissors
+function startRound(){
+    let computerChoice = getComputerChoice();
+    let userChoice = getUserChoice();
+    let winner = getWinner(userChoice, computerChoice);
+
+    console.log(winner.result);
 }
