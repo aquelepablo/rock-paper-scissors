@@ -123,6 +123,8 @@ function getWinner(userChoice, computerChoice){
         objResult.result = `You Lose! ${Choose[computerChoice]} beats ${Choose[userChoice]}`
     }
 
+    document.getElementById("results").innerHTML = `<p>${objResult.result}</p>`;
+
     return objResult;
     
     /*
