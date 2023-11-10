@@ -41,12 +41,10 @@ function getUserChoice(){
         let numUserChoice;
         let userChoice;
 
-        console.log(`strUserChoice: ${strUserChoice}`);
 
         //if user input is a number...
         if (!isNaN(parseInt(strUserChoice))) {
             numUserChoice = parseInt(strUserChoice);
-            console.log(`numUserChoice: ${numUserChoice}`);
 
             if (numUserChoice < 0 || numUserChoice > 2) {
                 console.log(`You choose ${numUserChoice}. The options are: Rock - 0 | Paper - 1 | Scissors - 2 `)
@@ -74,7 +72,6 @@ function getUserChoice(){
         } else if (strUserChoice.length > 1) {
 
             strUserChoice = strUserChoice.charAt(0).toUpperCase() + strUserChoice.substring(1).toLowerCase();
-            console.log(`strUserChoice Proper: ${strUserChoice}`)
 
             switch (Choose[strUserChoice]) {
                 case Choose.Rock:
