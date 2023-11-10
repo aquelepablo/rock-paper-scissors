@@ -37,7 +37,9 @@ function getComputerChoice(){
 //Prompt user to choose from Rock, Paper or Scissors
 function getUserChoice(){
     try {
-        let strUserChoice = prompt(`Make your move: Rock - 0 | Paper - 1 | Scissors - 2`);
+        //let strUserChoice = prompt(`Make your move: Rock - 0 | Paper - 1 | Scissors - 2`);
+        let strUserChoice = document.getElementById("playerChoice").value
+
         let numUserChoice;
         let userChoice;
 
