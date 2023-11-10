@@ -115,6 +115,10 @@ function getWinner(userChoice, computerChoice){
         objResult.userWin = true;
         objResult.result = `You Win! ${Choose[userChoice]} beats ${Choose[computerChoice]}`
 
+    }else if(userChoice == computerChoice){
+        objResult.userWin = false;
+        objResult.result = `This round is tied! ${Choose[userChoice]} equals ${Choose[computerChoice]}`
+
     }else{
         objResult.userWin = false;
         objResult.result = `You Lose! ${Choose[computerChoice]} beats ${Choose[userChoice]}`
