@@ -153,3 +153,7 @@ function startRound(){
 
     console.log(winner.result);
 }
+
+window.onload = function () {
+    document.getElementById("play").addEventListener("click", startRound);
+}
