@@ -1,4 +1,3 @@
-
 /*
 Object.keys(Choose)[1] > 'Paper'
 Choose['Paper'] > 1
@@ -12,6 +11,18 @@ const Choose = {
     [1]: 'Paper',
     [2]: 'Scissors'
 };
+
+let result = {
+    totalRounds: 0,
+    playerWins: 0,
+    computerWins: 0,
+    tiedRounds: 0,
+    roundsList: [], //{playerSelection:, computerSelection:, result:,}
+};
+
+let maxRounds = 5;
+let actualRound = 1;
+let playing = false;
 
 function getRandomInt(min, max) {
 
@@ -34,13 +45,18 @@ function getComputerSelection(){
     return numComputerSelection;
 }
 
-//Prompt user to choose from Rock, Paper or Scissors
+//Get user choice at radio list on page and return
 function getPlayerSelection(){
     try {
-        //let strUserChoice = prompt(`Make your move: Rock - 0 | Paper - 1 | Scissors - 2`);
-        let strUserSelection = document.getElementById("playerChoice").value
+        
+        let playerSelection = parseInt(document.querySelector('input[name="choice"]:checked').value);
 
-        let numUserSelection;
+        return playerSelection
+        
+        //let strUserChoice = prompt(`Make your move: Rock - 0 | Paper - 1 | Scissors - 2`);
+        //let strUserSelection = document.getElementById("playerChoice").value
+        
+    /*         let numUserSelection;
         let userSelection;
 
 
@@ -93,7 +109,8 @@ function getPlayerSelection(){
                     break;
             }
         }
-        return userSelection;
+        return userSelection; 
+    */
     } catch (error) {
         throw error;
     }
@@ -131,11 +148,11 @@ function playRound(userChoice, computerChoice, round = 0){
         objResult.result = `You Lose! ${Choose[computerChoice]} beats ${Choose[userChoice]}`
     }
 
-    if(round > 0){
+/*     if(round > 0){
         document.getElementById("results").innerHTML += `<p>Round ${round} - ${objResult.result}</p>`;    
     }else{
         document.getElementById("results").innerHTML = `<p>${objResult.result}</p>`;    
-    }
+    } */
     
     return objResult;
     
@@ -161,14 +178,6 @@ function playRound(userChoice, computerChoice, round = 0){
 function game(numRounds = 5){
     let computerSelection = NaN;
     let playerSelection = NaN;
-    let result = {
-        totalRounds: 0,
-        playerWins: 0,
-        computerWins: 0,
-        tiedRounds: 0,
-        //strResult: '',
-        roundsList: [],
-    };
 
     for(i = 1; i <= numRounds; i++){
         
@@ -189,6 +198,7 @@ function game(numRounds = 5){
         }
 
         console.log(result)
+        document.getElementById("results").innerHTML += `<p>Round ${i} - ${round.result}</p>`;
 
     }
 
@@ -197,8 +207,63 @@ function game(numRounds = 5){
     result = playRound(playerSelection, computerSelection); */
 }
 
+function gameNoLoop(){
+    let computerSelection = NaN;
+    let playerSelection = NaN;
+    let printMessage = '';
+
+
+    computerSelection = getComputerSelection();
+    playerSelection = getPlayerSelection();
+    let round = playRound(playerSelection, computerSelection);
+    //playRound.userWin
+    with (result) {
+        totalRounds++;
+        if(round.userWin) playerWins++;
+        if(round.computerWin) computerWins++;
+        if(round.tied) tiedRounds++;
+        roundsList.push({
+            playerSelection: Choose[playerSelection],
+            computerSelection: Choose[computerSelection],
+            result: round.result,
+        })
+    }
+
+    console.log(result)
+
+    printMessage = `Round ${actualRound} - ${round.result}`;
+    printMessage += ' | ' + (actualRound < maxRounds ? `Make your next move! ` : ` Final Round `);
+
+    document.getElementById("results").innerHTML += `<p>${printMessage}</p>`;
+    
+    if(maxRounds == actualRound){
+
+        printMessage = `Win: ${result.playerWins} | Loose: ${result.computerWins} | Tied: ${result.tiedRounds}`
+
+        document.getElementById("results").innerHTML += `<p>${printMessage}</p>`;
+
+        playing = false;
+    }
+
+    actualRound++;
+
+    /* computerSelection = getComputerSelection();
+    playerSelection = getPlayerSelection();
+    result = playRound(playerSelection, computerSelection); */
+}
+
 function startGame(){
-    game(5);
+
+    if(playing) {
+        gameNoLoop()
+    }else{
+        playing = true;
+        maxRounds = parseInt(document.getElementById("rounds").value);
+        actualRound = 1;
+        gameNoLoop();
+    }
+
+    //game(5);
 }
 
 window.onload = function () {

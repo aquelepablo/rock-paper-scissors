@@ -9,8 +9,14 @@
     <body>
         <h1>Rock Paper Scissors</h1>
         <div>
-            <p>The options are: Rock - 0 | Paper - 1 | Scissors - 2:</p>
-            <input id="playerChoice" type="text" placeholder="Enter your choice"/>
+            <p>You will play <input id="rounds" type="number" value= "5" placeholder=""/> rounds </p>
+            <p>Your choice: </p>
+            <!-- <div id="choices"> -->
+            <input type="radio" name="choice" id="rock" value="0"><label for="rock">Rock</label><br>
+            <input type="radio" name="choice" id="paper" value="1"><label for="paper">Paper</label><br>
+            <input type="radio" name="choice" id="scissors" value="2"><label for="scissors">Scissors</label><br>
+            <!-- </div> -->
+            <!-- <p>The options are: Rock - 0 | Paper - 1 | Scissors - 2: <input id="playerChoice" type="text" placeholder="Enter your choice"/></p> -->
         </div>
         <br>
         <button id="play">Play</button>
