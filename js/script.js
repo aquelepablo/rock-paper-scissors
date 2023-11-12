@@ -24,82 +24,82 @@ function getRandomInt(min, max) {
 }
 
 //Decides what will the computer choose from Rock, Paper or Scissors
-function getComputerChoice(){
+function getComputerSelection(){
 
     let numRandomMin = 0
     let numRandomMax = 2;
 
-    let randomNumber = getRandomInt(numRandomMin, numRandomMax);
+    let numComputerSelection = getRandomInt(numRandomMin, numRandomMax);
 
-    return randomNumber;
+    return numComputerSelection;
 }
 
 //Prompt user to choose from Rock, Paper or Scissors
-function getUserChoice(){
+function getPlayerSelection(){
     try {
         //let strUserChoice = prompt(`Make your move: Rock - 0 | Paper - 1 | Scissors - 2`);
-        let strUserChoice = document.getElementById("playerChoice").value
+        let strUserSelection = document.getElementById("playerChoice").value
 
-        let numUserChoice;
-        let userChoice;
+        let numUserSelection;
+        let userSelection;
 
 
         //if user input is a number...
-        if (!isNaN(parseInt(strUserChoice))) {
-            numUserChoice = parseInt(strUserChoice);
+        if (!isNaN(parseInt(strUserSelection))) {
+            numUserSelection = parseInt(strUserSelection);
 
-            if (numUserChoice < 0 || numUserChoice > 2) {
-                console.log(`You choose ${numUserChoice}. The options are: Rock - 0 | Paper - 1 | Scissors - 2 `)
+            if (numUserSelection < 0 || numUserSelection > 2) {
+                console.log(`You choose ${numUserSelection}. The options are: Rock - 0 | Paper - 1 | Scissors - 2 `)
                 return -1;
             }
 
-            switch (numUserChoice) {
+            switch (numUserSelection) {
                 case Choose.Rock:
-                    userChoice = Choose.Rock;
+                    userSelection = Choose.Rock;
                     break;
 
                 case Choose.Paper:
-                    userChoice = Choose.Paper;
+                    userSelection = Choose.Paper;
                     break;
 
                 case Choose.Scissors:
-                    userChoice = Choose.Scissors;
+                    userSelection = Choose.Scissors;
                     break;
 
                 default:
-                    userChoice = -1;
+                    userSelection = -1;
                     break;
             }
 
-        } else if (strUserChoice.length > 1) {
+        } else if (strUserSelection.length > 1) {
 
-            strUserChoice = strUserChoice.charAt(0).toUpperCase() + strUserChoice.substring(1).toLowerCase();
+            strUserSelection = strUserSelection.charAt(0).toUpperCase() + strUserSelection.substring(1).toLowerCase();
 
-            switch (Choose[strUserChoice]) {
+            switch (Choose[strUserSelection]) {
                 case Choose.Rock:
-                    userChoice = Choose.Rock;
+                    userSelection = Choose.Rock;
                     break;
 
                 case Choose.Paper:
-                    userChoice = Choose.Paper;
+                    userSelection = Choose.Paper;
                     break;
 
                 case Choose.Scissors:
-                    userChoice = Choose.Scissors;
+                    userSelection = Choose.Scissors;
                     break;
 
                 default:
-                    userChoice = -1;
+                    userSelection = -1;
                     break;
             }
         }
-        return userChoice;
+        return userSelection;
     } catch (error) {
         throw error;
     }
 }
 
-function getWinner(userChoice, computerChoice){
+function playRound(userChoice, computerChoice){
     
     let objResult = {
         userWin: false,
@@ -146,14 +146,14 @@ function getWinner(userChoice, computerChoice){
 }
 
 //Plays a single match of Rock, Paper, Scissors
-function startRound(){
-    let computerChoice = getComputerChoice();
-    let userChoice = getUserChoice();
-    let winner = getWinner(userChoice, computerChoice);
+function game(){
+    let computerSelection = getComputerSelection();
+    let playerSelection = getPlayerSelection();
+    let result = playRound(playerSelection, computerSelection);
 
-    console.log(winner.result);
+    console.log(result.result);
 }
 
 window.onload = function () {
-    document.getElementById("play").addEventListener("click", startRound);
+    document.getElementById("play").addEventListener("click", game);
 }
