@@ -99,10 +99,12 @@ function getPlayerSelection(){
     }
 }
 
-function playRound(userChoice, computerChoice){
+function playRound(userChoice, computerChoice, round = 0){
     
     let objResult = {
         userWin: false,
+        computerWin: false,
+        tied: false,
         result: ''
     }
 
@@ -112,19 +114,29 @@ function playRound(userChoice, computerChoice){
         (userChoice == Choose.Scissors && computerChoice == Choose.Paper)
     ){
         objResult.userWin = true;
+        objResult.computerWin = false;
+        objResult.tied = false;
         objResult.result = `You Win! ${Choose[userChoice]} beats ${Choose[computerChoice]}`
 
     }else if(userChoice == computerChoice){
         objResult.userWin = false;
+        objResult.computerWin = false;
+        objResult.tied = true;
         objResult.result = `This round is tied! ${Choose[userChoice]} equals ${Choose[computerChoice]}`
 
     }else{
         objResult.userWin = false;
+        objResult.computerWin = true;
+        objResult.tied = false;
         objResult.result = `You Lose! ${Choose[computerChoice]} beats ${Choose[userChoice]}`
     }
 
-    document.getElementById("results").innerHTML = `<p>${objResult.result}</p>`;
-
+    if(round > 0){
+        document.getElementById("results").innerHTML += `<p>Round ${round} - ${objResult.result}</p>`;    
+    }else{
+        document.getElementById("results").innerHTML = `<p>${objResult.result}</p>`;    
+    }
+    
     return objResult;
     
     /*
@@ -146,14 +158,54 @@ function playRound(userChoice, computerChoice){
 }
 
 //Plays a single match of Rock, Paper, Scissors
-function game(){
-    let computerSelection = getComputerSelection();
-    let playerSelection = getPlayerSelection();
-    let result = playRound(playerSelection, computerSelection);
+function game(numRounds = 5){
+    let computerSelection = NaN;
+    let playerSelection = NaN;
+    let result = {
+        totalRounds: 0,
+        playerWins: 0,
+        computerWins: 0,
+        tiedRounds: 0,
+        //strResult: '',
+        roundsList: [],
+    };
 
-    console.log(result.result);
+    for(i = 1; i <= numRounds; i++){
+        
+        computerSelection = getComputerSelection();
+        playerSelection = getPlayerSelection();
+        let round = playRound(playerSelection, computerSelection, i);
+        //playRound.userWin
+        with (result) {
+            totalRounds++;
+            if(round.userWin) playerWins++;
+            if(round.computerWin) computerWins++;
+            if(round.tied) tiedRounds++;
+            roundsList.push({
+                playerSelection: Choose[playerSelection],
+                computerSelection: Choose[computerSelection],
+                result: round.result,
+            })
+        }
+
+        console.log(result)
+
+    }
+
+    /* computerSelection = getComputerSelection();
+    playerSelection = getPlayerSelection();
+    result = playRound(playerSelection, computerSelection); */
+}
+
+function startGame(){
+    game(5);
 }
 
 window.onload = function () {
-    document.getElementById("play").addEventListener("click", game);
+    document.getElementById("play").addEventListener("click", startGame);
 }
+
+/*
+Changes:
+    playRound: Added status for computerWin and tied rounds
+*/
